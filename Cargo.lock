@@ -939,6 +939,7 @@ checksum = "40868e7c1d2f0b8d73e4a8c7f0ff63af4f6d19be117e90bd73eb1d62cf831c6b"
 [[package]]
 name = "tui-realm-stdlib"
 version = "3.0.0"
+source = "git+https://github.com/phughk/tui-realm-stdlib.git?branch=fixup-help-buildswq#bdd5ba62b4345da0e9383ff292f829948b403740"
 dependencies = [
  "textwrap",
  "tuirealm",

@@ -5,8 +5,9 @@ pub enum Msg {
 
 #[derive(Debug, Eq, PartialEq, Clone, Hash)]
 pub enum Id {
+    ChoicePanel,
     PlayerTable,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Eq, PartialEq, Debug)]
 pub enum UserEvent {}

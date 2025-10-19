@@ -1,3 +1,4 @@
+use crate::components::choice_panel::ChoicePanel;
 use crate::components::player_table::PlayerTableComponent;
 use crate::tuirealm_data::{Id, Msg, UserEvent};
 use ratatui::layout::{Constraint, Layout};
@@ -16,22 +17,6 @@ where
     pub redraw: bool,
 }
 
-impl<T> Model<T>
-where
-    T: TerminalAdapter,
-{
-    pub fn do_redraw(&mut self) {
-        self.terminal
-            .draw(|frame| {
-                let chunks = Layout::default()
-                    .direction(Direction::Horizontal)
-                    .constraints([Constraint::Fill(1), Constraint::Fill(2)]);
-                self.app.view(&Id::PlayerTable, frame, frame.area());
-            })
-            .unwrap();
-    }
-}
-
 impl Default for Model<CrosstermTerminalAdapter> {
     fn default() -> Self {
         Self {
@@ -40,6 +25,15 @@ impl Default for Model<CrosstermTerminalAdapter> {
             redraw: true,
             terminal: TerminalBridge::init_crossterm().expect("Cannot initialize terminal"),
         }
+    }
+}
+
+impl<T> Drop for Model<T>
+where
+    T: TerminalAdapter,
+{
+    fn drop(&mut self) {
+        self.terminal.disable_raw_mode().unwrap();
     }
 }
 
@@ -54,16 +48,29 @@ where
                 .poll_timeout(Duration::from_millis(10))
                 .tick_interval(Duration::from_secs(1)),
         );
+        app.mount(Id::ChoicePanel, Box::new(ChoicePanel::default()), vec![])
+            .unwrap();
         app.mount(
             Id::PlayerTable,
             Box::new(PlayerTableComponent::default()),
             vec![],
         )
         .unwrap();
+        app.active(&Id::ChoicePanel).unwrap();
         app
     }
 
-    fn redraw(&mut self) {
+    pub fn do_redraw(&mut self) {
+        self.terminal
+            .draw(|frame| {
+                let chunks = Layout::default()
+                    .direction(Direction::Horizontal)
+                    .constraints([Constraint::Fill(2), Constraint::Fill(1)])
+                    .split(frame.area());
+                self.app.view(&Id::ChoicePanel, frame, chunks[0]);
+                self.app.view(&Id::PlayerTable, frame, chunks[1]);
+            })
+            .unwrap();
         self.redraw = false;
     }
 }
