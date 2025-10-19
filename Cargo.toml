@@ -1,0 +1,8 @@
+[package]
+name = "liars-dice-rs"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+members = ["liars-dice-lib", "liars-dice-ratatui"]
+
