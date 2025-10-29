@@ -188,7 +188,7 @@ impl RollerOrNext {
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug, Ord, PartialOrd)]
-pub struct Dice(u8);
+pub struct Dice(pub u8);
 
 impl Dice {
     pub fn roll(rng: &mut ChaCha12Rng) -> Self {

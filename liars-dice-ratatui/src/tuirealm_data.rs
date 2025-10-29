@@ -1,6 +1,7 @@
 #[derive(Debug, PartialEq)]
 pub enum Msg {
     AppClose,
+    Refresh,
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Hash)]

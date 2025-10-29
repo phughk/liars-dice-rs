@@ -373,9 +373,12 @@ dependencies = [
 name = "liars-dice-ratatui"
 version = "0.1.0"
 dependencies = [
+ "liars-dice-lib",
+ "rand_chacha",
  "ratatui",
  "tui-realm-stdlib",
  "tuirealm",
+ "uuid",
 ]
 
 [[package]]

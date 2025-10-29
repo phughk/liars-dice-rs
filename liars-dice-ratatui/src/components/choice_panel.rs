@@ -87,6 +87,7 @@ impl Component<Msg, UserEvent> for ChoicePanel {
                     None
                 }
             }
+            Event::Tick | Event::WindowResize(_, _) => Some(Msg::Refresh),
             _ => None,
         }
     }

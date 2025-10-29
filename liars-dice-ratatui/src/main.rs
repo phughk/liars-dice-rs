@@ -15,6 +15,9 @@ pub fn main() {
                     Msg::AppClose => {
                         model.quit = true;
                     }
+                    Msg::Refresh => {
+                        model.redraw = true;
+                    }
                 }
             }
         }
